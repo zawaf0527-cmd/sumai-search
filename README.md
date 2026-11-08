@@ -30,6 +30,16 @@ https://github.com/user-attachments/assets/750f253d-7389-4592-af72-f7aa6fe8660d
 
 ---
 
+## 動作環境（検証環境）
+
+| 項目 | 内容 |
+|---|---|
+| OS | Windows 11 Home |
+| CPU | AMD Ryzen 7 9800X3D（8コア） |
+| メモリ | 64GB |
+| GPU | NVIDIA GeForce RTX 5080（VRAM 16GB） |
+| LLM | Ollama / qwen3.5:27b（約17GB。VRAMに載りきらない分はCPUで計算） |
+
 ## アーキテクチャ
 
 ```mermaid
