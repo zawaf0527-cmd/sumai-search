@@ -38,6 +38,11 @@ export default function Home() {
   const [error, setError] = useState("");
   const [searched, setSearched] = useState(false);
   const reqId = useRef(0);
+  const [expanded, setExpanded] = useState(false);          // 入力欄を大きく表示しているか
+  const taRef = useRef<HTMLTextAreaElement>(null);          // 入力欄そのものへの参照
+  const [showExamples, setShowExamples] = useState(true);   // 入力例を表示しているか
+
+
 
   async function runSearch(p: SearchPlan) {
     const id = ++reqId.current;
@@ -75,7 +80,7 @@ export default function Home() {
 
   async function onParse() {
     if (!text.trim() || busy) return;
-    setBusy("parse"); setError("");
+    setBusy("parse"); setError(""); setShowExamples(false);
     try {
       const p = await api.parse(text);
       setPlan(p);
@@ -105,10 +110,11 @@ export default function Home() {
         {/* 左：検索パネル */}
         <aside className="flex min-h-0 w-full flex-col border-slate-200 bg-white md:w-[480px] md:border-r">
           <div className="space-y-3 border-b border-slate-200 p-4">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 shadow-sm focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100">
+                          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 shadow-sm focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100">
               <textarea
-                className="w-full resize-none bg-transparent text-sm leading-relaxed outline-none"
-                rows={3}
+                ref={taRef}
+                className="block max-h-[40vh] min-h-[4.5rem] w-full resize-y bg-transparent text-sm leading-relaxed outline-none"
+                rows={expanded ? 10 : 3}
                 value={text}
                 placeholder="例：成城石井がある駅で静かな街、豊洲まで乗り換え1回以内で45分"
                 onChange={(e) => setText(e.target.value)}
@@ -116,10 +122,22 @@ export default function Home() {
                   if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); onParse(); }
                 }}
               />
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-xs text-slate-400">Ctrl + Enter で検索</span>
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs text-slate-500 transition hover:bg-slate-200 hover:text-slate-700"
+                    onClick={() => {
+                      if (taRef.current) taRef.current.style.height = ""; // ドラッグで変えた高さをリセット
+                      setExpanded((v) => !v);
+                    }}
+                  >
+                    {expanded ? "▲ 小さくする" : "▼ 大きくする"}
+                  </button>
+                  <span className="hidden text-xs text-slate-400 sm:inline">Ctrl + Enter で検索</span>
+                </div>
                 <button
-                  className="flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-orange-600 disabled:opacity-50"
+                  className="flex shrink-0 items-center gap-2 rounded-xl bg-orange-500 px-5 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-orange-600 disabled:opacity-50"
                   disabled={!!busy || !text.trim()}
                   onClick={onParse}
                 >
@@ -129,14 +147,26 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              {EXAMPLES.map((ex) => (
-                <button key={ex} onClick={() => setText(ex)} disabled={!!busy}
-                  className="max-w-full truncate rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 transition hover:border-orange-300 hover:bg-orange-50 hover:text-orange-700">
-                  {ex}
-                </button>
-              ))}
+            <div>
+              <button
+                type="button"
+                className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+                onClick={() => setShowExamples((v) => !v)}
+              >
+                {showExamples ? "▲ 入力例を隠す" : `▼ 入力例を表示（${EXAMPLES.length}件）`}
+              </button>
+              {showExamples && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {EXAMPLES.map((ex) => (
+                    <button key={ex} onClick={() => setText(ex)} disabled={!!busy}
+                      className="max-w-full truncate rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 transition hover:border-orange-300 hover:bg-orange-50 hover:text-orange-700">
+                      {ex}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
+
           </div>
 
           <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
