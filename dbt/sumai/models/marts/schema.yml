@@ -1,0 +1,12 @@
+version: 2
+models:
+  - name: dim_stations
+    columns:
+      - name: group_code
+        tests: [unique, not_null]   # 駅が重複していないこと、空でないこと
+      - name: city_code
+        tests: [not_null]           # すべての駅に市区町村が付いていること
+  - name: station_commute_v0
+    columns:
+      - name: group_code
+        tests: [unique, not_null]

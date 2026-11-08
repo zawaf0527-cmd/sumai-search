@@ -1,0 +1,46 @@
+# ===== 秘密情報（絶対に上げない）=====
+.env
+.env.*
+!.env.example
+
+# ===== データ（API取得データ・OSM由来・加工済みデータ）=====
+data/
+api/data/
+*.parquet
+*.pbf
+*.geojson
+*.gpkg
+logs/
+
+# ===== Python =====
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ===== dbt =====
+dbt/sumai/target/
+dbt/sumai/logs/
+dbt/sumai/dbt_packages/
+profiles.yml
+
+# ===== Terraform =====
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+
+# ===== Node / Next.js =====
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# ===== OS・エディタ =====
+Thumbs.db
+.DS_Store
+.vscode/
+notebooks/*.html

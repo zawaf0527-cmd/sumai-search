@@ -1,0 +1,51 @@
+area_metrics:
+  house_price_median: {label: 戸建て取引価格の中央値, unit: 円, better: low}
+  land_area_median:   {label: 土地面積の中央値, unit: ㎡, better: high}
+  share_land_150:     {label: 土地150㎡以上の取引割合, unit: 割合, better: high}
+  flood_share:        {label: 駅800m圏の浸水想定区域割合, unit: 割合, better: low}
+  flood_deep_share:   {label: 駅800m圏の深い浸水(ランク3以上)割合, unit: 割合, better: low}
+  landslide_share:    {label: 駅800m圏の土砂災害警戒区域割合, unit: 割合, better: low}
+poi:
+  large_shopping_mall: {label: 大型商業施設(2万㎡以上), default_within_m: 3000, hint: イオン ららぽーと ショッピングモール}
+  supermarket:         {label: スーパー, default_within_m: 800, hint: 買い物 日用品}
+  golf_course:         {label: ゴルフ場, default_within_m: 15000, hint: ゴルフ}
+  large_park:          {label: 大きな公園(3万㎡以上), default_within_m: 2000, hint: 犬の散歩 子どもの遊び場}
+  park:                {label: 公園, default_within_m: 800, hint: 公園}
+  dog_park:            {label: ドッグラン, default_within_m: 5000, hint: 犬}
+  hospital:            {label: 病院, default_within_m: 2000, hint: 医療}
+vibes:
+  quiet:
+    label: 静かな住宅街
+    hint: "静か、閑静、落ち着いた、騒がしくない"
+    features:
+      share_lowrise_res: {weight: 1.0,  label: 低層住宅地の割合, unit: pct}
+      n_nightlife_500:   {weight: -1.0, label: 駅500m内の飲み屋・遊興施設, unit: 軒}
+      n_shop_500:        {weight: -0.5, label: 駅500m内のお店, unit: 軒}
+  lively:
+    label: にぎやか・便利
+    hint: "にぎやか、下町、商店街、飲み屋、活気がある、便利"
+    features:
+      n_shop_500:        {weight: 1.0, label: 駅500m内のお店, unit: 軒}
+      n_restaurant_500:  {weight: 1.0, label: 駅500m内の飲食店, unit: 軒}
+      share_commercial:  {weight: 0.5, label: 商業地域の割合, unit: pct}
+  modern:
+    label: 洗練された・近代的な街並み
+    hint: "洗練、近代的、おしゃれ、都会的、再開発、タワーマンション"
+    features:
+      n_cafe_500:        {weight: 1.0, label: 駅500m内のカフェ, unit: 軒}
+      share_commercial:  {weight: 0.5, label: 商業地域の割合, unit: pct}
+      share_midhigh_res: {weight: 0.5, label: 中高層住宅地の割合, unit: pct}
+      n_mall_1500:       {weight: 0.5, label: 1.5km内のショッピングモール, unit: 件}
+  green:
+    label: 緑が多い
+    hint: "緑、自然、公園が多い"
+    features:
+      n_park_1000:       {weight: 1.0, label: 1km内の公園, unit: 件}
+      share_lowrise_res: {weight: 0.5, label: 低層住宅地の割合, unit: pct}
+  family:
+    label: 子育てしやすい
+    hint: "子育て、ファミリー、公園や保育園が多い"
+    features:
+      n_childcare_1000:  {weight: 1.0,  label: 1km内の保育園・幼稚園, unit: 件}
+      n_park_1000:       {weight: 1.0,  label: 1km内の公園, unit: 件}
+      n_nightlife_500:   {weight: -0.5, label: 駅500m内の飲み屋・遊興施設, unit: 軒}

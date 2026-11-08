@@ -1,0 +1,17 @@
+version: 2
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: n02_station
+      - name: n03_admin
+      - name: s12_passengers
+      - name: reinfo_prices
+      - name: reinfo_flood
+      - name: reinfo_landslide
+      - name: osm_poi
+      - name: ekidata_station
+      - name: ekidata_line
+      - name: ekidata_join
+      - name: osm_places
+      - name: reinfo_zoning
