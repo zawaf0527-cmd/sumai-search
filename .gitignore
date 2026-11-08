@@ -44,3 +44,4 @@ Thumbs.db
 .DS_Store
 .vscode/
 notebooks/*.html
+*.mp4
